@@ -22,6 +22,7 @@ app.use(express.json())
 //routes
 app.use('/api/users', require('./routes/users'))
 app.use('/api/login', require('./routes/auth'))
+app.use('/api/hospitals', require('./routes/hospitals'))
 
 // up server
 app.listen(process.env.PORT, () => {
