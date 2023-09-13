@@ -13,14 +13,15 @@ const app = express()
 // Set up cors
 app.use(cors());
 
-// port
-const port = 3000
-
 //BD
 connectionDB();
 
+// Parse and read body request
+app.use(express.json())
+
 //routes
-app.get('/', (req, res) => res.status(202).json({ ok: true, message: "You're in home" }) );
+app.use('/api/users', require('./routes/users'))
+app.use('/api/login', require('./routes/auth'))
 
 // up server
 app.listen(process.env.PORT, () => {
