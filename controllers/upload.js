@@ -8,7 +8,7 @@ const fileUpload = async(req = request, res = response) => {
     const type = req.params.type;
     const id = req.params.id;
     const allowedTypes = await getDirectoriesInMainDirectory();
-    
+
     // check if type is allowed
     if (allowedTypes && !allowedTypes.includes(type)) {
         return res.status(400).json({
@@ -45,7 +45,7 @@ const fileUpload = async(req = request, res = response) => {
     const path = `./uploads/${type}/${filename}`;
 
     // move img
-    file.mv(path, (err) => {
+    file.mv(path, async (err) => {
         
         if (err) {
             console.log(err);
@@ -53,9 +53,14 @@ const fileUpload = async(req = request, res = response) => {
         }
 
         // update bd
-        updateImage(type, id, path, filename);
+        const changeImg = await updateImage(type, id, filename);
 
-        res.json({ ok: true, message: 'File uploaded.', filename })
+        if (changeImg) {
+            res.json({ ok: true, message: 'File uploaded.', filename })
+        } else {
+            res.status(500).json({ ok: false, message: 'File was not uploaded.' })
+        }
+
 
     })
 
