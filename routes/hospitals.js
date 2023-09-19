@@ -11,11 +11,15 @@ const { getHospitals, createHospital, updateHospital, deleteHospital } = require
 const router = Router();
 
 // get all hospitals
-router.get('/', [], getHospitals)
+router.get('/', [validateJWT], getHospitals)
 
 // create hospital
 router.post('/',
-    [],
+    [
+        validateJWT,
+        check('name', 'Hospital`s name is required').not().isEmpty(),
+        validateFields
+    ],
     createHospital)
 
 // update hospital

@@ -3,15 +3,18 @@ const { request, response } = require('express')
 const bcrypt = require('bcryptjs')
 const { generateToken } = require('../helpers/jwt')
 
-const getUsers = async (req, res) => {
+const getUsers = async (req = request, res = response) => {
+    
+    const pFrom = Number(req.query.from) || 0;
+    const pTo = Number(req.query.limit) || 5;
 
-    await User.find({}, 'name email role isGoogleAccount').then((users, err) => {
-        if (!err) {
-            res.send({ ok: true, users })
-        } else {
-            res.status(500).send({ ok: false, message: err })
-        }
-    })
+    // Several promises
+    const [users, total] = await Promise.all([
+        User.find({}, 'name email role isGoogleAccount').skip(pFrom).limit(pTo),
+        User.count()
+    ]);
+
+    res.json({ ok: true, users, total })
 }
 
 const createUser = async (req, res = response) => {
