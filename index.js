@@ -13,6 +13,9 @@ const app = express()
 // Set up cors
 app.use(cors());
 
+// Public folder
+app.use(express.static('public'));
+
 //BD
 connectionDB();
 
