@@ -24,10 +24,16 @@ router.post('/',
 
 // update hospital
 router.put('/:id',
-    [],
+    [
+        validateJWT,
+        check('name', 'Hospital`s name is required').not().isEmpty(),
+        validateFields
+    ],
     updateHospital)
 
 // delete hospital
-router.delete('/:id', [], deleteHospital)
+router.delete('/:id',
+    validateJWT,
+    deleteHospital)
 
 module.exports = router;

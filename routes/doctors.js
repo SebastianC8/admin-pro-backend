@@ -25,10 +25,15 @@ router.post('/',
 
 // update hospital
 router.put('/:id',
-    [],
+    [
+        validateJWT,
+        check('name', 'Doctor`s name is a required file.').not().isEmpty(),
+        check('hospital', 'Hospital id must be valid').isMongoId(),
+        validateFields
+    ],
     updateDoctor)
 
 // delete hospital
-router.delete('/:id', [], deleteDoctor)
+router.delete('/:id', validateJWT, deleteDoctor)
 
 module.exports = router;

@@ -35,8 +35,8 @@ const login = async (req, res = response) => {
 }
 
 const loginGoogle = async (req, res = response) => {
-    
-    try {    
+
+    try {
         const googleUser = await googleVerify(req.body.token);
         const { name, email, picture } = googleUser;
 
@@ -57,13 +57,13 @@ const loginGoogle = async (req, res = response) => {
 
         // generate jwt token
         const token = await generateToken(userG.id)
-        
+
         res.json({
             ok: true,
             email, name, picture,
             token
         })
-        
+
     } catch (error) {
         console.log(error);
         res.status(400).json({
@@ -73,7 +73,18 @@ const loginGoogle = async (req, res = response) => {
     }
 }
 
+const renewToken = async (req, res = response) => {
+
+    const uid = req.uid;
+
+    // generate jwt token
+    const token = await generateToken(uid)
+
+    res.send({ ok: true, token })
+}
+
 module.exports = {
     login,
-    loginGoogle
+    loginGoogle,
+    renewToken
 }
