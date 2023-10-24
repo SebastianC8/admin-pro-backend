@@ -52,8 +52,6 @@ const createUser = async (req, res = response) => {
 
 const updateUser = async (req = request, res = response) => {
     
-    //TODO: Validate token
-    
     const uid = req.params.id
 
     try {    
@@ -73,7 +71,10 @@ const updateUser = async (req = request, res = response) => {
             }
         }
 
-        fields.email = email;
+        if (!userDB.isGoogleAccount) {
+            fields.email = email;
+        }
+        
         // Return old object by default
         // Must set up to return the new object
         const userUpdated = await User.findByIdAndUpdate(uid, fields, { new: true })

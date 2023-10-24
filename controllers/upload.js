@@ -73,10 +73,12 @@ const getImage = async(req = request, res = response) => {
     const type = req.params.type;
     const img = req.params.imgID;
     const pathImg = path.join(__dirname, `../uploads/${type}/${img}`);
-    const defaultImg = path.join(__dirname, `../uploads/default-image.jpg`);
+    const defaultImg = path.join(__dirname, `../uploads/users/default-image.jpg`);
 
     let returnImg = null;
     returnImg = (fs.existsSync(pathImg)) ? pathImg : defaultImg;
+
+    console.log(returnImg);
 
     res.sendFile(returnImg);
 }

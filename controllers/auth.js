@@ -77,10 +77,12 @@ const renewToken = async (req, res = response) => {
 
     const uid = req.uid;
 
+    const user = await User.findById(uid);
+
     // generate jwt token
     const token = await generateToken(uid)
 
-    res.send({ ok: true, token })
+    res.send({ ok: true, user, token })
 }
 
 module.exports = {

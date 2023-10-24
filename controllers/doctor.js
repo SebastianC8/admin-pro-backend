@@ -57,7 +57,7 @@ const deleteDoctor = async (req = request, res = response) => {
         const doctor = await Doctor.findById(id);
 
         if (!doctor) {
-            return res.status(400).json({ ok: false, message: 'Doctor not exists.' })
+            return res.status(400).json({ ok: false, message: 'D..octor not exists.' })
         }
 
         await Doctor.findOneAndDelete(id)
