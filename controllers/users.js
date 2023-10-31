@@ -10,7 +10,7 @@ const getUsers = async (req = request, res = response) => {
 
     // Several promises
     const [users, total] = await Promise.all([
-        User.find({}, 'name email role isGoogleAccount').skip(pFrom).limit(pTo),
+        User.find({}, 'name email img role isGoogleAccount').skip(pFrom).limit(pTo),
         User.count()
     ]);
 
@@ -74,7 +74,7 @@ const updateUser = async (req = request, res = response) => {
         if (!userDB.isGoogleAccount) {
             fields.email = email;
         }
-        
+
         // Return old object by default
         // Must set up to return the new object
         const userUpdated = await User.findByIdAndUpdate(uid, fields, { new: true })

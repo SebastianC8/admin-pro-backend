@@ -2,8 +2,14 @@ const Doctor = require('../models/doctor')
 const { request, response } = require('express')
 
 const getDoctors = async (req = request, res = response) => {
-    const doctors = await Doctor.find().populate('user', 'name').populate('hospital', 'name');
+    const doctors = await Doctor.find().populate('user', 'name img').populate('hospital', 'name img');
     res.json({ ok: true, doctors })
+}
+
+const getDoctor = async (req = request, res = response) => {
+    const id = req.params.id;
+    const doctor = await Doctor.findById(id).populate('user', 'name img').populate('hospital', 'name img');
+    res.json({ ok: true, doctor })
 }
 
 const createDoctor = async (req = request, res = response) => {
@@ -76,6 +82,7 @@ const deleteDoctor = async (req = request, res = response) => {
 
 module.exports = {
     getDoctors,
+    getDoctor,
     createDoctor,
     updateDoctor,
     deleteDoctor

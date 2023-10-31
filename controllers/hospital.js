@@ -3,12 +3,17 @@ const { request, response } = require('express')
 
 const getHospitals = async (req = request, res = response) => {
 
-    const hospitals = await Hospital.find().populate('user', 'name img');
+    try {
+        const hospitals = await Hospital.find().populate('user', 'name img');
 
-    res.json({
-        ok: true,
-        hospitals
-    })
+        res.json({
+            ok: true,
+            hospitals
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ ok: false, message: error })
+    }
 }
 
 const createHospital = async (req = request, res = response) => {
