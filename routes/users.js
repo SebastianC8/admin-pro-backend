@@ -6,7 +6,7 @@ const { Router } = require('express')
 const { check } = require('express-validator')
 const { getUsers, createUser, updateUser, deleteUser } = require('../controllers/users')
 const { validateFields } = require('../middlewares/validate-fields');
-const { validateJWT, validateAdminRole, validateIfItIsMyUser, validateIfItIsMvalidateIfAdminRoleOrItIsMyUseryUser } = require('../middlewares/validate-jwt');
+const { validateJWT, validateAdminRole, validateIfIsAdminRoleOrItIsMyUser } = require('../middlewares/validate-jwt');
 
 const router = Router();
 
